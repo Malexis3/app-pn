@@ -128,7 +128,7 @@ const GROUPES = {
     HAUT_GRADE: [
         ROLE_ADMIN,
         ROLE_CG, ROLE_CD, ROLE_CRE, ROLE_ECRE,
-        ROLE_CDTD, ROLE_CDT, ROLE_CNE
+        ROLE_CDTD, ROLE_CDT
     ],
 
     OPJ: [
