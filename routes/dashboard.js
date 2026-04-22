@@ -243,9 +243,9 @@ router.get("/", async (req, res) => {
         <html>
         <head>
             <meta charset="UTF-8">
-            <link rel="stylesheet" href="../public/Styles/styles.css">
+            <link rel="stylesheet" href="/style.css">
             <title>Dashboard</title>
-            <link rel="icon" href="../public/Images/pn2.jpeg">
+            <link rel="icon" href="../Images/pn2.jpeg">
 
             <script>
                 function toggleProfileMenu() {
