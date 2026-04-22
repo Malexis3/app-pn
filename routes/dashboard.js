@@ -308,7 +308,7 @@ router.get("/Reglement", checkRole(GROUPES.POLICE), (req, res) => {
 });
 
 // CCD
-router.get("/Gestion", checkRole(GROUPES.CCD), (req, res) => {
+router.get("/Gestion", checkRole(GROUPES.HAUT_GRADE), (req, res) => {
     res.sendFile(path.join(__dirname, "..", "pages", "gestion.html"));
 });
 
