@@ -209,7 +209,7 @@ router.get("/", async (req, res) => {
             links.push(`<a class="btn" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfU-HhcY66y7BuUiaqVS-K8-gXjBpo81VekUaJP2HMXssBjgg/viewform">LRPPN</a><br>`);
         }
         
-        if (hasAnyRole(roles,GROUPES.CCD)) {
+        if (hasAnyRole(roles,GROUPES.HAUT_GRADE)) {
             links.push(`<a class="btn" href="/dashboard/Gestion">Gestion</a>`);
         }
 
