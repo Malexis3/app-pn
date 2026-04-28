@@ -200,6 +200,7 @@ router.get("/", async (req, res) => {
 
         if (hasAnyRole(roles,GROUPES.POLICE)) {
             links.push(`<a class="btn" href="/dashboard/Mdt">MDT</a>`);
+            links.push(`<a class="btn" href="/dashboard/Tablette">Tablette</a>`);
             links.push(`<a class="btn" href="/dashboard/Annuaire">Annuaire Police</a>`);
             links.push(`<a class="btn" href="/dashboard/Organigramme">Organigramme</a>`);
             links.push(`<a class="btn" href="/dashboard/Reglement">Règlement de l'institution</a>`);
@@ -297,6 +298,10 @@ router.get("/Annuaire", checkRole(GROUPES.POLICE), (req, res) => {
 
 router.get("/Mdt", checkRole(GROUPES.POLICE), (req, res) => {
     res.sendFile(path.join(__dirname, "..", "pages", "mdt.html"));
+});
+
+router.get("/Tablette", checkRole(GROUPES.POLICE), (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "pages", "tablette.html"));
 });
 
 router.get("/Organigramme", checkRole(GROUPES.POLICE), (req, res) => {
