@@ -2,21 +2,121 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Tablette MDT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Police Nationale - MDT</title>
+<link rel="icon" href="../Images/pn2.jpeg">
+
 <style>
-body{margin:0;background:#0b1220;color:#fff;font-family:Arial;display:flex;height:100vh}
-.sidebar{width:260px;background:#050a18;padding:15px}
-.main{flex:1;padding:20px}
-.agent{background:#1a2747;margin:6px 0;padding:8px;border-radius:6px;cursor:grab}
-.unit{background:#111a2e;padding:10px;border-radius:8px;margin-bottom:15px}
-.dropzone{min-height:60px;border:2px dashed #2a3b5c;padding:5px;border-radius:6px}
-button{padding:6px;border:none;border-radius:5px;cursor:pointer}
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0b1220;
+    color:#fff;
+}
+
+header{
+    background:#050a18;
+    padding:10px;
+    border-bottom:1px solid #1a2747;
+}
+
+.banner{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:40px;
+}
+
+.navigation{
+    list-style:none;
+    padding:0;
+    margin-top:10px;
+}
+
+.navigation a{
+    color:white;
+    text-decoration:none;
+    background:#1a2747;
+    padding:6px 10px;
+    border-radius:5px;
+}
+
+.container{
+    display:flex;
+    height:calc(100vh - 140px);
+}
+
+.sidebar{
+    width:260px;
+    background:#050a18;
+    padding:15px;
+    border-right:1px solid #1a2747;
+}
+
+.main{
+    flex:1;
+    padding:20px;
+}
+
+.agent{
+    background:#1a2747;
+    margin:6px 0;
+    padding:8px;
+    border-radius:6px;
+    cursor:grab;
+}
+
+.unit{
+    background:#111a2e;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.dropzone{
+    min-height:60px;
+    border:2px dashed #2a3b5c;
+    padding:5px;
+    border-radius:6px;
+}
+
+button{
+    padding:6px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
 .green{background:green;color:#fff}
 .red{background:#aa2a2a;color:#fff}
-.topbar{display:flex;justify-content:space-between;margin-bottom:10px}
+
+footer{
+    text-align:center;
+    padding:10px;
+    background:#050a18;
+    border-top:1px solid #1a2747;
+}
 </style>
 </head>
+
 <body>
+
+<header>
+    <div class="banner">
+        <img src="../Images/pn1.jpeg" class="logo">
+        <h1>Police Nationale - MDT</h1>
+    </div>
+    <nav>
+        <ul class="navigation">
+            <li><a href="/dashboard">Retour</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
 
 <div class="sidebar">
 <h3>Effectifs</h3>
@@ -24,18 +124,19 @@ button{padding:6px;border:none;border-radius:5px;cursor:pointer}
 </div>
 
 <div class="main">
-<div class="topbar">
 <h2>Unités actives</h2>
 <button class="green" onclick="createUnit()">+ Créer unité</button>
-</div>
 <div id="units"></div>
 </div>
 
+</div>
+
+<footer>
+<p>&copy; 2026 Police Nationale - Crée par Alexis_tvv</p>
+</footer>
+
 <script>
-// SIMULATION (à remplacer par Discord backend plus tard)
-const currentUser = {
-    roles: ["COMMANDEMENT"] // change pour test
-};
+const currentUser = { roles:["COMMANDEMENT"] };
 
 const AGENTS = [
  {id:1,name:"Lucas",group:"PS"},
@@ -44,13 +145,8 @@ const AGENTS = [
  {id:4,name:"Antoine",group:"COMMAND"}
 ];
 
-function hasRole(role){
- return currentUser.roles.includes(role);
-}
+function hasRole(role){return currentUser.roles.includes(role)}
 
-// =====================
-// AGENTS (prise service)
-// =====================
 const container = document.getElementById("agents");
 
 AGENTS.forEach(a=>{
@@ -69,14 +165,8 @@ function prise(id){
  document.getElementById("agent-"+id).style.display="block";
 }
 
-// =====================
-// DRAG & DROP
-// =====================
-function drag(ev){
- ev.dataTransfer.setData("text",ev.target.id);
-}
-
-function allowDrop(ev){ev.preventDefault();}
+function drag(ev){ev.dataTransfer.setData("text",ev.target.id)}
+function allowDrop(ev){ev.preventDefault()}
 
 function drop(ev){
  ev.preventDefault();
@@ -93,16 +183,13 @@ function drop(ev){
  ev.target.appendChild(agent);
 }
 
-// =====================
-// CREATION UNITE
-// =====================
 function createUnit(){
  if(!hasRole("COMMANDEMENT")){
   alert("Accès refusé");
   return;
  }
 
- let name=prompt("Nom unité (VSAV, BAC...)");
+ let name=prompt("Nom unité");
  let group=prompt("Groupe (PS, BAC, COMMAND)");
 
  let div=document.createElement("div");
