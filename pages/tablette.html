@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Tablette MDT</title>
+<style>
+body{margin:0;background:#0b1220;color:#fff;font-family:Arial;display:flex;height:100vh}
+.sidebar{width:260px;background:#050a18;padding:15px}
+.main{flex:1;padding:20px}
+.agent{background:#1a2747;margin:6px 0;padding:8px;border-radius:6px;cursor:grab}
+.unit{background:#111a2e;padding:10px;border-radius:8px;margin-bottom:15px}
+.dropzone{min-height:60px;border:2px dashed #2a3b5c;padding:5px;border-radius:6px}
+button{padding:6px;border:none;border-radius:5px;cursor:pointer}
+.green{background:green;color:#fff}
+.red{background:#aa2a2a;color:#fff}
+.topbar{display:flex;justify-content:space-between;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+<h3>Effectifs</h3>
+<div id="agents"></div>
+</div>
+
+<div class="main">
+<div class="topbar">
+<h2>Unités actives</h2>
+<button class="green" onclick="createUnit()">+ Créer unité</button>
+</div>
+<div id="units"></div>
+</div>
+
+<script>
+// SIMULATION (à remplacer par Discord backend plus tard)
+const currentUser = {
+    roles: ["COMMANDEMENT"] // change pour test
+};
+
+const AGENTS = [
+ {id:1,name:"Lucas",group:"PS"},
+ {id:2,name:"Tom",group:"BAC"},
+ {id:3,name:"Mathys",group:"PS"},
+ {id:4,name:"Antoine",group:"COMMAND"}
+];
+
+function hasRole(role){
+ return currentUser.roles.includes(role);
+}
+
+// =====================
+// AGENTS (prise service)
+// =====================
+const container = document.getElementById("agents");
+
+AGENTS.forEach(a=>{
+ let div=document.createElement("div");
+ div.className="agent";
+ div.id="agent-"+a.id;
+ div.dataset.group=a.group;
+ div.draggable=true;
+ div.innerHTML=`${a.name}<br><button class='green' onclick='prise(${a.id})'>Prise de service</button>`;
+ div.style.display="none";
+ div.ondragstart=drag;
+ container.appendChild(div);
+});
+
+function prise(id){
+ document.getElementById("agent-"+id).style.display="block";
+}
+
+// =====================
+// DRAG & DROP
+// =====================
+function drag(ev){
+ ev.dataTransfer.setData("text",ev.target.id);
+}
+
+function allowDrop(ev){ev.preventDefault();}
+
+function drop(ev){
+ ev.preventDefault();
+ let id=ev.dataTransfer.getData("text");
+ let agent=document.getElementById(id);
+ let agentGroup=agent.dataset.group;
+ let unitGroup=ev.target.closest(".unit").dataset.group;
+
+ if(agentGroup!==unitGroup){
+  alert("Spécialité incompatible");
+  return;
+ }
+
+ ev.target.appendChild(agent);
+}
+
+// =====================
+// CREATION UNITE
+// =====================
+function createUnit(){
+ if(!hasRole("COMMANDEMENT")){
+  alert("Accès refusé");
+  return;
+ }
+
+ let name=prompt("Nom unité (VSAV, BAC...)");
+ let group=prompt("Groupe (PS, BAC, COMMAND)");
+
+ let div=document.createElement("div");
+ div.className="unit";
+ div.dataset.group=group;
+
+ div.innerHTML=`
+  <h3>${name}</h3>
+  <div class='dropzone' ondrop='drop(event)' ondragover='allowDrop(event)'></div>
+  <button class='red' onclick='this.parentElement.remove()'>Supprimer</button>
+ `;
+
+ document.getElementById("units").appendChild(div);
+}
+</script>
+
+</body>
+</html>
