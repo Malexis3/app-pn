@@ -227,11 +227,6 @@
             const res = await fetch("/agents-service");
             agents = await res.json();
         } catch {
-            // Mode test local
-            agents = [
-                { id: "1", username: "Alexis", avatar: "https://cdn.discordapp.com/embed/avatars/0.png" },
-                { id: "2", username: "Nolan", avatar: "https://cdn.discordapp.com/embed/avatars/1.png" }
-            ];
         }
 
         const box = document.getElementById("agents");
