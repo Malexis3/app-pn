@@ -7,6 +7,7 @@ const checkRole = require("../checkRole");
 const ROLE_ADMIN = "1397137409342312543";
 const ROLE_MOD = "1397137411276013619";
 const ROLE_PN = "1397137411066302575";
+const ROLE_EN_SERVICE = "1397137408813695077";
 
 // AGREDITATION :
 const ROLE_OPJ = "1397137400467296268";
@@ -172,6 +173,82 @@ function getUserGrade(userRoles) {
 function hasAnyRole(userRoles, roleGroup) {
     return roleGroup.some(role => userRoles.includes(role));
 }
+
+router.post("/prise-service", async (req, res) => {
+    if (!req.user) return res.status(401).send("Non connecté");
+
+    try {
+        const guildId = process.env.GUILD_ID;
+
+        await axios.put(
+            `https://discord.com/api/v10/guilds/${guildId}/members/${req.user.id}/roles/${ROLE_EN_SERVICE}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bot ${process.env.CLIENT_TOKEN}`
+                }
+            }
+        );
+
+        res.send({ success: true });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Erreur Discord");
+    }
+});
+
+router.post("/fin-service", async (req, res) => {
+    try {
+        const guildId = process.env.GUILD_ID;
+
+        await axios.delete(
+            `https://discord.com/api/v10/guilds/${guildId}/members/${req.user.id}/roles/${ROLE_EN_SERVICE}`,
+            {
+                headers: {
+                    Authorization: `Bot ${process.env.CLIENT_TOKEN}`
+                }
+            }
+        );
+
+        res.send({ success: true });
+
+    } catch (err) {
+        res.status(500).send("Erreur");
+    }
+});
+
+router.get("/agents-service", async (req, res) => {
+    try {
+        const guildId = process.env.GUILD_ID;
+
+        const members = await axios.get(
+            `https://discord.com/api/v10/guilds/${guildId}/members?limit=1000`,
+            {
+                headers: {
+                    Authorization: `Bot ${process.env.CLIENT_TOKEN}`
+                }
+            }
+        );
+
+        const enService = members.data.filter(m =>
+            m.roles.includes(ROLE_EN_SERVICE)
+        );
+
+        const formatted = enService.map(m => ({
+            id: m.user.id,
+            username: m.nick || m.user.username,
+            avatar: m.user.avatar
+                ? `https://cdn.discordapp.com/avatars/${m.user.id}/${m.user.avatar}.png`
+                : `https://cdn.discordapp.com/embed/avatars/0.png`
+        }));
+
+        res.json(formatted);
+
+    } catch (err) {
+        res.status(500).send("Erreur API");
+    }
+});
 
 router.get("/", async (req, res) => {
     if (!req.user) return res.redirect("/");

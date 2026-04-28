@@ -107,15 +107,28 @@ footer{
 <header>
     <div class="banner">
         <img src="../Images/pn1.jpeg" class="logo">
-        <h1>Police Nationale - MDT</h1>
+        <h1>Police Nationale</h1>
     </div>
-    <nav>
-        <ul class="navigation">
-            <li><a href="/dashboard">Retour</a></li>
-        </ul>
-    </nav>
 </header>
 
+<div class="topbar">
+    <button onclick="priseService()" class="green">Prise de service</button>
+</div>
+
+<div class="container">
+
+    <div class="sidebar">
+        <h3>Effectifs</h3>
+        <div id="agents"></div>
+    </div>
+
+    <div class="main">
+        <h2>Patrouilles</h2>
+        <button onclick="createUnit()">Créer une unité</button>
+        <div id="units"></div>
+    </div>
+
+</div>
 <div class="container">
 
 <div class="sidebar">
@@ -134,76 +147,37 @@ footer{
 <footer>
 <p>&copy; 2026 Police Nationale - Crée par Alexis_tvv</p>
 </footer>
-
 <script>
-const currentUser = { roles:["COMMANDEMENT"] };
-
-const AGENTS = [
- {id:1,name:"Lucas",group:"PS"},
- {id:2,name:"Tom",group:"BAC"},
- {id:3,name:"Mathys",group:"PS"},
- {id:4,name:"Antoine",group:"COMMAND"}
-];
-
-function hasRole(role){return currentUser.roles.includes(role)}
-
-const container = document.getElementById("agents");
-
-AGENTS.forEach(a=>{
- let div=document.createElement("div");
- div.className="agent";
- div.id="agent-"+a.id;
- div.dataset.group=a.group;
- div.draggable=true;
- div.innerHTML=`${a.name}<br><button class='green' onclick='prise(${a.id})'>Prise de service</button>`;
- div.style.display="none";
- div.ondragstart=drag;
- container.appendChild(div);
-});
-
-function prise(id){
- document.getElementById("agent-"+id).style.display="block";
+    async function priseService() {
+    await fetch("/dashboard/prise-service", { method: "POST" });
+    loadAgents();
 }
 
-function drag(ev){ev.dataTransfer.setData("text",ev.target.id)}
-function allowDrop(ev){ev.preventDefault()}
+async function loadAgents() {
+    const res = await fetch("/dashboard/agents-service");
+    const data = await res.json();
 
-function drop(ev){
- ev.preventDefault();
- let id=ev.dataTransfer.getData("text");
- let agent=document.getElementById(id);
- let agentGroup=agent.dataset.group;
- let unitGroup=ev.target.closest(".unit").dataset.group;
+    const container = document.getElementById("agents");
+    container.innerHTML = "";
 
- if(agentGroup!==unitGroup){
-  alert("Spécialité incompatible");
-  return;
- }
+    data.forEach(a => {
+        const div = document.createElement("div");
+        div.className = "agent";
+        div.draggable = true;
+        div.id = "agent-" + a.id;
 
- ev.target.appendChild(agent);
+        div.innerHTML = `
+            <img src="${a.avatar}" width="30" style="border-radius:50%">
+            ${a.username}
+        `;
+
+        div.ondragstart = drag;
+        container.appendChild(div);
+    });
 }
 
-function createUnit(){
- if(!hasRole("COMMANDEMENT")){
-  alert("Accès refusé");
-  return;
- }
-
- let name=prompt("Nom unité");
- let group=prompt("Groupe (PS, BAC, COMMAND)");
-
- let div=document.createElement("div");
- div.className="unit";
- div.dataset.group=group;
-
- div.innerHTML=`
-  <h3>${name}</h3>
-  <div class='dropzone' ondrop='drop(event)' ondragover='allowDrop(event)'></div>
-  <button class='red' onclick='this.parentElement.remove()'>Supprimer</button>
- `;
-
- document.getElementById("units").appendChild(div);
-}
+setInterval(loadAgents, 5000); // refresh auto
+loadAgents();
 </script>
 
 </body>
