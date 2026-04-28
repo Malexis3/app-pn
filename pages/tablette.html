@@ -1,184 +1,244 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Police Nationale - MDT</title>
-<link rel="icon" href="../Images/pn2.jpeg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Nationale - MDT</title>
 
-<style>
-body{
-    margin:0;
-    font-family:Arial;
-    background:#0b1220;
-    color:#fff;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1220;
+            color: #fff;
+        }
 
-header{
-    background:#050a18;
-    padding:10px;
-    border-bottom:1px solid #1a2747;
-}
+        header {
+            background: #050a18;
+            padding: 10px;
+            border-bottom: 1px solid #1a2747;
+        }
 
-.banner{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
+        .banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.logo{
-    width:40px;
-}
+        .banner img {
+            width: 50px;
+            border-radius: 5px;
+        }
 
-.navigation{
-    list-style:none;
-    padding:0;
-    margin-top:10px;
-}
+        .topbar {
+            padding: 10px;
+            background: #0e1a33;
+            border-bottom: 1px solid #1a2747;
+        }
 
-.navigation a{
-    color:white;
-    text-decoration:none;
-    background:#1a2747;
-    padding:6px 10px;
-    border-radius:5px;
-}
+        .green {
+            background: green;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
 
-.container{
-    display:flex;
-    height:calc(100vh - 140px);
-}
+        .container {
+            display: flex;
+            height: calc(100vh - 150px);
+        }
 
-.sidebar{
-    width:260px;
-    background:#050a18;
-    padding:15px;
-    border-right:1px solid #1a2747;
-}
+        /* Sidebar Agents */
+        .sidebar {
+            width: 260px;
+            background: #050a18;
+            padding: 15px;
+            border-right: 1px solid #1a2747;
+            overflow-y: auto;
+        }
 
-.main{
-    flex:1;
-    padding:20px;
-}
+        .agent {
+            background: #1a2747;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: grab;
+        }
 
-.agent{
-    background:#1a2747;
-    margin:6px 0;
-    padding:8px;
-    border-radius:6px;
-    cursor:grab;
-}
+        .agent img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
 
-.unit{
-    background:#111a2e;
-    padding:10px;
-    border-radius:8px;
-    margin-bottom:15px;
-}
+        .main {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
 
-.dropzone{
-    min-height:60px;
-    border:2px dashed #2a3b5c;
-    padding:5px;
-    border-radius:6px;
-}
+        .unit {
+            background: #111a2e;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid #20355d;
+        }
 
-button{
-    padding:6px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-}
+        .dropzone {
+            min-height: 80px;
+            padding: 10px;
+            border: 2px dashed #304a7a;
+            border-radius: 8px;
+        }
 
-.green{background:green;color:#fff}
-.red{background:#aa2a2a;color:#fff}
+        .btn-delete {
+            margin-top: 10px;
+            background: #8b1e1e;
+            padding: 7px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+        }
 
-footer{
-    text-align:center;
-    padding:10px;
-    background:#050a18;
-    border-top:1px solid #1a2747;
-}
-</style>
+        footer {
+            background: #050a18;
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid #1a2747;
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-    <div class="banner">
-        <img src="../Images/pn1.jpeg" class="logo">
-        <h1>Police Nationale</h1>
-    </div>
-</header>
+    <!-- BANNIÈRE -->
+    <header>
+        <div class="banner">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Logo_Police_nationale_fran%C3%A7aise.svg/640px-Logo_Police_nationale_fran%C3%A7aise.svg.png">
+            <h1>Police Nationale - MDT</h1>
+        </div>
+    </header>
 
-<div class="topbar">
-    <button onclick="priseService()" class="green">Prise de service</button>
-</div>
-
-<div class="container">
-
-    <div class="sidebar">
-        <h3>Effectifs</h3>
-        <div id="agents"></div>
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <button class="green" onclick="priseService()">Prise de service</button>
     </div>
 
-    <div class="main">
-        <h2>Patrouilles</h2>
-        <button onclick="createUnit()">Créer une unité</button>
-        <div id="units"></div>
+    <!-- CONTENU -->
+    <div class="container">
+
+        <!-- EFFECTIFS -->
+        <div class="sidebar">
+            <h2>Effectifs</h2>
+            <div id="agents"></div>
+        </div>
+
+        <!-- UNITÉS -->
+        <div class="main">
+            <h2>Patrouilles</h2>
+
+            <button class="green" onclick="createUnit()">Créer une unité</button>
+
+            <div id="units"></div>
+        </div>
+
     </div>
 
-</div>
-<div class="container">
+    <footer>
+        © 2026 Police Nationale — Alexis_tvv
+    </footer>
 
-<div class="sidebar">
-<h3>Effectifs</h3>
-<div id="agents"></div>
-</div>
 
-<div class="main">
-<h2>Unités actives</h2>
-<button class="green" onclick="createUnit()">+ Créer unité</button>
-<div id="units"></div>
-</div>
+    <!-- JAVASCRIPT LOGIQUE -->
+    <script>
 
-</div>
+        /* CONFIG → change selon ton backend */
+        const USER_IS_COMMAND = true; // ⚠️ METTRE false SI L'USER N'A PAS COMMANDEMENT
+        
+        /* --- PRISE DE SERVICE --- */
+        async function priseService() {
+            await fetch("/prise-service", { method: "POST" });
+            loadAgents();
+        }
 
-<footer>
-<p>&copy; 2026 Police Nationale - Crée par Alexis_tvv</p>
-</footer>
-<script>
-    async function priseService() {
-    await fetch("/dashboard/prise-service", { method: "POST" });
-    loadAgents();
-}
+        /* --- CHARGER AGENTS EN SERVICE --- */
+        async function loadAgents() {
+            const res = await fetch("/agents-service");
+            const agents = await res.json();
 
-async function loadAgents() {
-    const res = await fetch("/dashboard/agents-service");
-    const data = await res.json();
+            const box = document.getElementById("agents");
+            box.innerHTML = "";
 
-    const container = document.getElementById("agents");
-    container.innerHTML = "";
+            agents.forEach(a => {
+                let div = document.createElement("div");
+                div.className = "agent";
+                div.id = "agent-" + a.id;
+                div.draggable = true;
 
-    data.forEach(a => {
-        const div = document.createElement("div");
-        div.className = "agent";
-        div.draggable = true;
-        div.id = "agent-" + a.id;
+                div.ondragstart = drag;
 
-        div.innerHTML = `
-            <img src="${a.avatar}" width="30" style="border-radius:50%">
-            ${a.username}
-        `;
+                div.innerHTML = `
+                    <img src="${a.avatar}">
+                    <span>${a.username}</span>
+                `;
 
-        div.ondragstart = drag;
-        container.appendChild(div);
-    });
-}
+                box.appendChild(div);
+            });
+        }
 
-setInterval(loadAgents, 5000); // refresh auto
-loadAgents();
-</script>
+        /* --- DRAG & DROP --- */
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+        function drop(ev) {
+            ev.preventDefault();
+            let id = ev.dataTransfer.getData("text");
+            let agent = document.getElementById(id);
+            ev.target.appendChild(agent);
+        }
+
+        /* --- CRÉATION UNITÉ --- */
+        function createUnit() {
+
+            if (!USER_IS_COMMAND) {
+                alert("Accès refusé : COMMANDEMENT uniquement.");
+                return;
+            }
+
+            let name = prompt("Nom de l'unité :");
+
+            if (!name) return;
+
+            let div = document.createElement("div");
+            div.className = "unit";
+
+            div.innerHTML = `
+                <h3>${name}</h3>
+                <div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <button class="btn-delete" onclick="this.parentElement.remove()">Supprimer unité</button>
+            `;
+
+            document.getElementById("units").appendChild(div);
+        }
+
+        /* --- AUTO-REFRESH --- */
+        loadAgents();
+        setInterval(loadAgents, 5000);
+
+    </script>
 
 </body>
+
 </html>
