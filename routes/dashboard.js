@@ -102,6 +102,9 @@ const GRADES = [
 ];
 
 const GROUPES = {
+    DEV:[
+        ROLE_ADMIN, ROLE_MOD
+    ],
     // Généraux
     POLICE: [
         ROLE_CG, ROLE_CD, ROLE_CRE, ROLE_ECRE, 
@@ -275,9 +278,12 @@ router.get("/", async (req, res) => {
         // On stocke les liens dans un tableau, puis on les join()
         let links = [];
 
+        if (hasAnyRole(roles,GROUPES.DEV)) {
+            links.push(`<a class="btn" href="/dashboard/Tablette">Tablette</a>`);
+        }
+
         if (hasAnyRole(roles,GROUPES.POLICE)) {
             links.push(`<a class="btn" href="/dashboard/Mdt">MDT</a>`);
-            links.push(`<a class="btn" href="/dashboard/Tablette">Tablette</a>`);
             links.push(`<a class="btn" href="/dashboard/Annuaire">Annuaire Police</a>`);
             links.push(`<a class="btn" href="/dashboard/Organigramme">Organigramme</a>`);
             links.push(`<a class="btn" href="/dashboard/Reglement">Règlement de l'institution</a>`);
@@ -378,7 +384,7 @@ router.get("/Mdt", checkRole(GROUPES.POLICE), (req, res) => {
 });
 
 router.get("/Tablette", checkRole(GROUPES.POLICE), (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "pages", "tablette.html"));
+    res.sendFile(path.join(__dirname, "..", "pages", "dispatch.html"));
 });
 
 router.get("/Organigramme", checkRole(GROUPES.POLICE), (req, res) => {
