@@ -4,6 +4,7 @@ const axios = require("axios");
 const checkRole = require("../checkRole");
 
 // ID de rôles
+const ROLE_EDITEUR = "1430293616412070038"
 const ROLE_ADMIN = "1397137409342312543";
 const ROLE_MOD = "1397137411276013619";
 const ROLE_PN = "1397137411066302575";
@@ -103,7 +104,7 @@ const GRADES = [
 
 const GROUPES = {
     DEV:[
-        ROLE_ADMIN, ROLE_MOD
+        ROLE_EDITEUR
     ],
     // Généraux
     POLICE: [
