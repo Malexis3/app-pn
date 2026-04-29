@@ -113,7 +113,7 @@ const GROUPES = {
         ROLE_RULP, ROLE_MEEX, ROLE_MJR, ROLE_BC, ROLE_BGD, ROLE_SB, ROLE_GPX, ROLE_GPXS, ROLE_EGPX, ROLE_PA
     ],
 
-    CC: [
+CC: [
         ROLE_CDTD, ROLE_CDT, ROLE_CNE, ROLE_LT, ROLE_CNS, ROLE_ENC
     ],
 
@@ -205,11 +205,11 @@ router.get("/", async (req, res) => {
             links.push(`<a class="btn" href="/dashboard/Mdt">MDT</a>`);
             links.push(`<a class="btn" href="/dashboard/Annuaire">Annuaire Police</a>`);
             links.push(`<a class="btn" href="/dashboard/Organigramme">Organigramme</a>`);
-            links.push(`<a class="btn" href="/dashboard/Reglement">Règlement de l'institution</a>`);
+            links.push(`<a class="btn" href="/dashboard/Reglement">Règlement de l'institution</a><br>`);
         }
 
         if (hasAnyRole(roles,GROUPES.OPJ)) {
-            links.push(`<a class="btn" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfU-HhcY66y7BuUiaqVS-K8-gXjBpo81VekUaJP2HMXssBjgg/viewform">LRPPN</a><br>`);
+            links.push(`<a class="btn" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfU-HhcY66y7BuUiaqVS-K8-gXjBpo81VekUaJP2HMXssBjgg/viewform">LRPPN</a>`);
         }
         
         if (hasAnyRole(roles,GROUPES.HAUT_GRADE)) {
