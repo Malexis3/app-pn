@@ -201,8 +201,11 @@ router.get("/", async (req, res) => {
             links.push(`<a class="btn" href="/dashboard/Tablette">Tablette</a>`);
         }
 
-        if (hasAnyRole(roles,GROUPES.POLICE)) {
+        if (hasAnyRole(roles,ROLE_EN_SERVICE)) {
             links.push(`<a class="btn" href="/dashboard/Mdt">MDT</a>`);
+        }
+
+        if (hasAnyRole(roles,GROUPES.POLICE)) {
             links.push(`<a class="btn" href="/dashboard/Annuaire">Annuaire Police</a>`);
             links.push(`<a class="btn" href="/dashboard/Organigramme">Organigramme</a>`);
             links.push(`<a class="btn" href="/dashboard/Reglement">Règlement de l'institution</a><br>`);
