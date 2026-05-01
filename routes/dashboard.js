@@ -285,6 +285,11 @@ router.get("/", async (req, res) => {
 });
 
 // Routes protégées
+// STAFF / DEV
+router.get("/tablette", checkRole(GROUPES.DEV), (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "pages", "tablette.html"));
+});
+
 router.get("/admin", checkRole(ROLE_ADMIN), (req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "admin.html"));
 });
