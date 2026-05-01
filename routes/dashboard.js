@@ -103,6 +103,9 @@ const GRADES = [
 ];
 
 const GROUPES = {
+    SERVICE: [
+        ROLE_EN_SERVICE
+    ],
     DEV:[
         ROLE_EDITEUR
     ],
@@ -201,7 +204,7 @@ router.get("/", async (req, res) => {
             links.push(`<a class="btn" href="/dashboard/Tablette">Tablette</a>`);
         }
 
-        if (hasAnyRole(roles,ROLE_EN_SERVICE)) {
+        if (hasAnyRole(roles,GROUPES.SERVICE)) {
             links.push(`<a class="btn" href="/dashboard/Mdt">MDT</a>`);
         }
 
