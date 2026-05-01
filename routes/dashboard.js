@@ -303,7 +303,7 @@ router.get("/Annuaire", checkRole(GROUPES.POLICE), (req, res) => {
     res.sendFile(path.join(__dirname, "..", "pages", "Annuaire.html"));
 });
 
-router.get("/Mdt", checkRole(GROUPES.POLICE), (req, res) => {
+router.get("/Mdt", checkRole(ROLE_EN_SERVICE), (req, res) => {
     res.sendFile(path.join(__dirname, "..", "pages", "mdt.html"));
 });
 
