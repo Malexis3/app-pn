@@ -321,6 +321,10 @@ router.get("/Organigramme", checkRole(GROUPES.POLICE), (req, res) => {
     res.sendFile(path.join(__dirname, "..", "pages", "hierrarchie.html"));
 });
 
+router.get("/radio", checkRole(GROUPES.POLICE), (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "pages", "radio.html"));
+});
+
 router.get("/Reglement", checkRole(GROUPES.POLICE), (req, res) => {
     res.sendFile(path.join(__dirname, "..", "pages", "reglement.html"));
 });
