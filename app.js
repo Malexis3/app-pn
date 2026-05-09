@@ -15,41 +15,6 @@ app.use(session({
     saveUninitialized: false
 }));
 
-// === server.js (Backend Node.js) ===
-// Install: npm init -y && npm install express socket.io
-import { createServer } from 'http';
-import { Server } from 'socket.io';
-
-const app = express();
-const httpServer = createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    origin: "*"
-  }
-});
-
-io.on('connection', socket => {
-  console.log('Client connecté:', socket.id);
-
-  socket.on('joinChannel', channel => {
-    socket.join(channel);
-    socket.channel = channel;
-  });
-
-  socket.on('webrtc-offer', data => {
-    socket.to(socket.channel).emit('webrtc-offer', data);
-  });
-
-  socket.on('webrtc-answer', data => {
-    socket.to(socket.channel).emit('webrtc-answer', data);
-  });
-
-  socket.on('webrtc-ice', data => {
-    socket.to(socket.channel).emit('webrtc-ice', data);
-  });
-});
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 

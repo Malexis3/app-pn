@@ -168,7 +168,7 @@ function getUserGrade(userRoles) {
     for (const grade of GRADES) {
         if (userRoles.includes(grade.id)) return grade.label;
     }
-    return "Aucun grade";
+    return "POLICIER";
 }
 
 function hasAnyRole(userRoles, roleGroup) {
