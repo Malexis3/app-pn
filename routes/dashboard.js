@@ -318,7 +318,7 @@ router.get("/Tablette", checkRole(GROUPES.POLICE), (req, res) => {
 });
 
 router.get("/Organigramme", checkRole(GROUPES.POLICE), (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "pages", "hierrarchie.html"));
+    res.sendFile(path.join(__dirname, "..", "pages", "organigramme.html"));
 });
 
 router.get("/radio", checkRole(GROUPES.POLICE), (req, res) => {
