@@ -104,7 +104,7 @@ const GRADES = [
 
 const GROUPES = {
     SERVICE: [
-        ROLE_EN_SERVICE
+        ROLE_EDITEUR,ROLE_EN_SERVICE
     ],
     DEV:[
         ROLE_EDITEUR
